@@ -1,12 +1,28 @@
 public class Admin {
-    private String id;
-    private String usuario;
-    private String contrasena;
+    private String username;
+    private String password;
 
-    // Getters y setters
+    // Constructor
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-    public boolean autenticarUsuario(String usuario, String contrasena) {
-        // Lógica para autenticar al usuario administrador
-        return usuario.equals(this.usuario) && contrasena.equals(this.contrasena);
+    // Métodos para obtener y establecer el nombre de usuario
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // Métodos para obtener y establecer la contraseña
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
