@@ -1,4 +1,4 @@
-public class Refaccion {
+public class SuministroM {
     private int id;
     private String nombre;
     private String marca;
@@ -7,7 +7,7 @@ public class Refaccion {
     private double precio;
 
     // Constructor
-    public Refaccion(int id, String nombre, String marca, String proveedor, int existencias, double precio) {
+    public SuministroM(int id, String nombre, String marca, String proveedor, int existencias, double precio) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;

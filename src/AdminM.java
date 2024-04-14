@@ -1,9 +1,9 @@
-public class Admin {
+public class AdminM {
     private String username;
     private String password;
 
     // Constructor
-    public Admin(String username, String password) {
+    public AdminM(String username, String password) {
         this.username = username;
         this.password = password;
     }

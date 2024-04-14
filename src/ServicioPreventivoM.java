@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class ServicioPreventivo {
+public class ServicioPreventivoM {
     private int id;
     private String modelo;
     private String descripcion;
@@ -12,7 +12,7 @@ public class ServicioPreventivo {
     private int folioCliente;
 
     // Constructor
-    public ServicioPreventivo(int id, String modelo, String descripcion, String estadoCoche, String estatusServicio, Date fecha, String hora, double costo, int folioCliente) {
+    public ServicioPreventivoM(int id, String modelo, String descripcion, String estadoCoche, String estatusServicio, Date fecha, String hora, double costo, int folioCliente) {
         this.id = id;
         this.modelo = modelo;
         this.descripcion = descripcion;

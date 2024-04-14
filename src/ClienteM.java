@@ -1,4 +1,4 @@
-public class Cliente {
+public class ClienteM {
     private int folio;
     private String nombre;
     private String apellidoMaterno;
@@ -8,7 +8,7 @@ public class Cliente {
     private boolean esCliente;
 
     // Constructor
-    public Cliente(int folio, String nombre, String apellidoMaterno, String apellidoPaterno, String direccion, String telefono, boolean esCliente) {
+    public ClienteM(int folio, String nombre, String apellidoMaterno, String apellidoPaterno, String direccion, String telefono, boolean esCliente) {
         this.folio = folio;
         this.nombre = nombre;
         this.apellidoMaterno = apellidoMaterno;
