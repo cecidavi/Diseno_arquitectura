@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 package Vistas;
 
 /**
@@ -14,7 +9,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /** Creates new form MenuPrincipal */
     public MenuPrincipal() {
         initComponents();
-    }
+        
+        // Asociar evento al botón Salir
+        BtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSalirActionPerformed(evt);
+            }
+        });
+        
+        // Asociar evento al botón Administrador
+        BtnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAdminActionPerformed(evt);
+            }
+        });
+        
+        // Asociar evento al botón Usuario
+        BtnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUsuarioActionPerformed(evt);
+            }
+        });
+    }  
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -59,12 +75,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
                             .addComponent(BtnUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BtnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(BtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(jLabel1)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,7 +92,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addComponent(BtnUsuario)
                 .addGap(18, 18, 18)
                 .addComponent(BtnAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(BtnSalir)
                 .addContainerGap())
         );
@@ -83,6 +100,30 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Cierra la ventana actual
+        this.dispose();
+    }                                         
+    
+    private void BtnAdminActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Abre la ventana de administradores
+        Admins admins = new Admins();
+        admins.setVisible(true);
+        
+        // Cierra la ventana actual
+        this.dispose();
+    } 
+
+    private void BtnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // Abre la ventana de clientes
+        Clientes clientes = new Clientes();
+        clientes.setVisible(true);
+        
+        // Cierra la ventana actual
+        this.dispose();
+    } 
+
+    
     /**
      * @param args the command line arguments
      */

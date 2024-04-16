@@ -4,6 +4,18 @@
  */
 package Vistas;
 
+import javax.swing.JMenuItem;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import Conexiones.Conexion;
+import Vistas.ModificarServicioDialog; // Agrega esta línea al principio de tu clase
+
+
 /**
  *
  * @author yairs
@@ -15,7 +27,204 @@ public class ServicioPreventivo extends javax.swing.JFrame {
      */
     public ServicioPreventivo() {
         initComponents();
+        configurarMenu(); // Llamar al método para configurar el menú
+
     }
+    
+
+    private void configurarMenu() {
+        // Crear el elemento del menú "Salir"
+        JMenuItem menuItemSalir = new JMenuItem("Salir");
+        menuItemSalir.addActionListener(evt -> {
+            // Lógica para manejar el evento del menú "Salir"
+            System.exit(0);
+        });
+
+        // Agregar el elemento del menú "Salir" al menú "Archivo"
+        jMenuSalir.add(menuItemSalir);
+
+
+        JMenuItem menuItemNuevo = new JMenuItem("Nuevo");
+        menuItemNuevo.addActionListener(evt -> {
+            // Lógica para manejar el evento del menú "Nuevo"
+            agregarNuevoServicioPreventivo();
+        });
+    
+        // Agregar el elemento del menú "Nuevo" al menú "Archivo"
+        jMenuNuevo.add(menuItemNuevo);
+
+        JMenuItem menuItemConsultar = new JMenuItem("Consultar");
+        menuItemConsultar.addActionListener(evt -> {
+            // Lógica para manejar el evento del menú "Consultar"
+            consultarServicioPreventivo();
+        });
+    
+        // Agregar el elemento del menú "Consultar" al menú "Archivo"
+        jMenuConsultar.add(menuItemConsultar);
+
+        JMenuItem menuItemModificar = new JMenuItem("Modificar");
+        menuItemModificar.addActionListener(evt -> {
+            // Lógica para manejar el evento del menú "Modificar"
+            modificarServicioPreventivo();
+        });
+    
+        // Agregar el elemento del menú "Modificar" al menú "Archivo"
+        jMenuModificar.add(menuItemModificar);
+
+            // Crear el elemento del menú "Eliminar"
+    JMenuItem menuItemEliminar = new JMenuItem("Eliminar");
+    menuItemEliminar.addActionListener(evt -> {
+        // Lógica para manejar el evento del menú "Eliminar"
+        eliminarServicioPreventivo();
+    });
+
+    // Agregar el elemento del menú "Eliminar" al menú "Archivo"
+    jMenuEliminar.add(menuItemEliminar);
+
+        
+    }
+
+
+    private void eliminarServicioPreventivo() {
+        // TODO Auto-generated method stub
+    // Obtener el ID del servicio preventivo a eliminar
+    String idEliminacion = JOptionPane.showInputDialog(this, "Ingrese el ID del servicio preventivo a eliminar:");
+
+    // Confirmar la eliminación con un cuadro de diálogo de confirmación
+    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar el servicio preventivo con ID " + idEliminacion + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+    
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        // Eliminar el servicio preventivo de la base de datos
+        try {
+            Connection con = new Conexion().getConexion();
+            String query = "DELETE FROM Servicio_Preventivo WHERE Id = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, idEliminacion);
+            int filasAfectadas = pstmt.executeUpdate();
+            
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(this, "Servicio preventivo eliminado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún servicio preventivo con el ID especificado");
+            }
+            
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al eliminar el servicio preventivo");
+        }
+    }
+
+    }
+
+
+    private void modificarServicioPreventivo() {
+        // TODO Auto-generated method stub
+     // Obtener el ID del servicio preventivo a modificar
+     String idModificacion = JOptionPane.showInputDialog(this, "Ingrese el ID del servicio preventivo a modificar:");
+
+     // Consultar el servicio preventivo en la base de datos
+     try {
+         Connection con = new Conexion().getConexion();
+         String query = "SELECT * FROM Servicio_Preventivo WHERE Id = ?";
+         PreparedStatement pstmt = con.prepareStatement(query);
+         pstmt.setString(1, idModificacion);
+         ResultSet rs = pstmt.executeQuery();
+         
+         // Mostrar los resultados de la consulta en un cuadro de diálogo
+         if (rs.next()) {
+             // Obtener los datos actuales del servicio preventivo
+             String modeloCocheActual = rs.getString("Modelo_Coche");
+             String descripcionActual = rs.getString("Descripcion");
+             String estadoActual = rs.getString("Estado_Servicio");
+             long costoActual = rs.getLong("Costo_Estimado");
+             String fechaActual = rs.getString("Fecha");
+             String horaActual = rs.getString("Hora");
+             String folioClienteActual = rs.getString("Clientes_Id");
+             
+             // Mostrar un formulario para que el usuario modifique los datos
+             ModificarServicioDialog dialog = new ModificarServicioDialog(this, true, idModificacion, modeloCocheActual, descripcionActual, estadoActual, costoActual, fechaActual, horaActual, folioClienteActual);
+             dialog.setVisible(true);
+         } else {
+             JOptionPane.showMessageDialog(this, "No se encontró ningún servicio preventivo con el ID especificado");
+         }
+         
+         con.close();
+     } catch (SQLException e) {
+         e.printStackTrace();
+         JOptionPane.showMessageDialog(this, "Error al modificar el servicio preventivo");
+     }
+    }
+
+
+    private void consultarServicioPreventivo() {
+        // TODO Auto-generated method stub
+    // Obtener el ID del servicio preventivo a consultar
+    String idConsulta = JOptionPane.showInputDialog(this, "Ingrese el ID del servicio preventivo a consultar:");
+
+    // Consultar el servicio preventivo en la base de datos
+    try {
+        Connection con = new Conexion().getConexion();
+        String query = "SELECT * FROM Servicio_Preventivo WHERE Id = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, idConsulta);
+        ResultSet rs = pstmt.executeQuery();
+        
+        // Llenar los campos de texto con la información del servicio preventivo
+        if (rs.next()) {
+            txtId.setText(rs.getString("Id"));
+            txtModelo.setText(rs.getString("Modelo_Coche"));
+            txtDescripcion.setText(rs.getString("Descripcion"));
+            txtEstCoche.setText(rs.getString("Estado_Servicio"));
+            txtCosto.setText(Long.toString(rs.getLong("Costo_Estimado")));
+            txtFecha.setText(rs.getString("Fecha"));
+            txtHora.setText(rs.getString("Hora"));
+            txtFolio.setText(rs.getString("Clientes_Id"));
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró ningún servicio preventivo con el ID especificado");
+        }
+        
+        con.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al consultar el servicio preventivo");
+    }
+    }
+
+
+    private void agregarNuevoServicioPreventivo() {
+        // TODO Auto-generated method stub
+ // Obtener los datos ingresados en los campos de texto
+ String id = txtId.getText();
+ String modeloCoche = txtModelo.getText();
+ String descripcion = txtDescripcion.getText();
+ String estadoServicio = txtEstCoche.getText();
+ long costoEstimado = Long.parseLong(txtCosto.getText());
+ String fecha = txtFecha.getText();
+ String hora = txtHora.getText();
+ String clientesId = txtFolio.getText();
+
+ // Insertar los datos en la base de datos
+ try {
+     Connection con = new Conexion().getConexion();
+     String query = "INSERT INTO Servicio_Preventivo (Id, Modelo_Coche, Descripcion, Estado_Servicio, Costo_Estimado, Fecha, Hora, Clientes_Id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+     PreparedStatement pstmt = con.prepareStatement(query);
+     pstmt.setString(1, id);
+     pstmt.setString(2, modeloCoche);
+     pstmt.setString(3, descripcion);
+     pstmt.setString(4, estadoServicio);
+     pstmt.setLong(5, costoEstimado);
+     pstmt.setString(6, fecha);
+     pstmt.setString(7, hora);
+     pstmt.setString(8, clientesId);
+     pstmt.executeUpdate();
+     JOptionPane.showMessageDialog(this, "Servicio preventivo agregado correctamente");
+     con.close();
+ } catch (SQLException e) {
+     e.printStackTrace();
+     JOptionPane.showMessageDialog(this, "Error al agregar el servicio preventivo");
+ }    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

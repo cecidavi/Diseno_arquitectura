@@ -3,21 +3,21 @@ package Conexiones;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
- 
- 
+
 public class Conexion {
-    Connection con = null;
-    String base="agencia";
-    String url="jdbc:mysql://localhost:3306/"+base;
-    String user="root";
-    String password="";
-    public Connection getConexion(){
-        try{
+    private Connection con = null;
+    private String base = "agencia";
+    private String url = "jdbc:mysql://localhost:3306/" + base;
+    private String user = "root";
+    private String password = "";
+
+    public Connection getConexion() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException | SQLException e){
-            System.err.print(e);
+            con = DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
         return con;
     }
-}//end class
+}

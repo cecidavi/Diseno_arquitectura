@@ -1,6 +1,10 @@
 
 package Vistas;
 
+import javax.swing.JOptionPane;
+
+import Controladores.AdminC;
+
 /**
  *
  * @author yairs
@@ -12,7 +16,37 @@ public class Admins extends javax.swing.JFrame {
      */
     public Admins() {
         initComponents();
-    }
+                // Asociar evento al botón Cancelar
+                BtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        BtnCancelarActionPerformed(evt);
+                    }
+                });
+
+                // Asociar evento al botón Aceptar\
+                BtnAceptar.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        try {
+                            String usuario = TxtUsuario.getText();
+                            String contraseña = new String(TxtContraseña.getPassword());
+                            
+                            if (AdminC.iniciarSesion(usuario, contraseña)) {
+                                // Si la sesión se inició correctamente, abre la ventana Suministros.java
+                                Suministro suministro = new Suministro();
+                                suministro.setVisible(true);
+                                
+                                // Cierra la ventana actual (MenuPrincipal)
+                                dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error al iniciar sesión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });                
+            }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +135,14 @@ public class Admins extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        MenuPrincipal MenuPrincipal = new MenuPrincipal();
+        MenuPrincipal.setVisible(true);
+        
+        // Cierra la ventana actual
+        this.dispose();
+    } 
+
     /**
      * @param args the command line arguments
      */
@@ -137,12 +179,12 @@ public class Admins extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAceptar;
-    private javax.swing.JButton BtnCancelar;
-    private javax.swing.JPasswordField TxtContraseña;
-    private javax.swing.JTextField TxtUsuario;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    public javax.swing.JButton BtnAceptar;
+    public javax.swing.JButton BtnCancelar;
+    public javax.swing.JPasswordField TxtContraseña;
+    public javax.swing.JTextField TxtUsuario;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
