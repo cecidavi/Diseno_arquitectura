@@ -1,3 +1,5 @@
+package Modelos;
+
 public class RefaccionM {
     private int id;
     private String nombre;

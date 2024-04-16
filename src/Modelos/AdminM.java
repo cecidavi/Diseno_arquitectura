@@ -1,3 +1,5 @@
+package Modelos;
+
 public class AdminM {
     private String username;
     private String password;

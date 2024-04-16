@@ -1,3 +1,5 @@
+package Modelos;
+
 public class SuministroM {
     private int id;
     private String nombre;
